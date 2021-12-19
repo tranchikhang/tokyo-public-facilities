@@ -28,7 +28,7 @@ class API {
         return fetch(API_URL + url, requestOptions)
             .then(this.handleResponse)
             .catch((error) => {
-                statusCode(error);
+                this.statusCode(error);
             });
     }
 

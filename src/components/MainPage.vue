@@ -67,12 +67,13 @@
 
 <script>
     import {API} from './api/Common.js';
+    import { customAlert } from '../lib/custom-alert.js'
     export default {
         name: 'main-page',
         data: function() {
             return {
                 isActive: false,
-            searchText: ''
+                searchText: ''
             }
         },
         methods: {
@@ -80,8 +81,7 @@
                 this.isActive = !this.isActive;
             },
             search: function() {
-                console.log(this.searchText);
-                API.getRequest('PublicFacility?名称.表記=東京文化会館')
+                API.getRequest('PublicFacility?名称.表記=' + this.searchText)
                     .then(data => {
                         console.log(data)
                 });
@@ -89,3 +89,5 @@
         }
     }
 </script>
+
+<style src="../lib/custom-alert.css"></style>
