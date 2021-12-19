@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import ResultList from './components/ResultList.vue'
 import VueRouter from 'vue-router'
-import '../node_modules/Bulma/CSS/bulma.css';
+import '../node_modules/bulma/css/bulma.css';
 import './assets/main.css'
 
 Vue.use(VueRouter)
