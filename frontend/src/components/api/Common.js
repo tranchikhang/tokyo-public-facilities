@@ -1,8 +1,6 @@
-const API_URL = "https://api.data.metro.tokyo.lg.jp/v1/";
-const STATUS_SUCCESS = 200;
+import { CONFIG } from '../../config/config.js'
 
-class API {
-
+export default class API {
     /**
      * error message handling
      * @return {none}
@@ -11,6 +9,34 @@ class API {
 
     static statusCode(xhr) {
         // show xhr.status code
+    }
+
+    /**
+     * request related methods
+     */
+
+    /**
+     * helper function to handle timeout
+     * @param  {ms} timeout in milisecond
+     * @param  {promise}
+     * @return {promise}
+     */
+    static timeoutPromise(ms, promise) {
+        return new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+                reject(new Error("timeout"))
+            }, ms);
+            promise.then(
+                (res) => {
+                    clearTimeout(timeoutId);
+                    resolve(res);
+                },
+                (err) => {
+                    clearTimeout(timeoutId);
+                    reject(err);
+                }
+            );
+        });
     }
 
     /**
@@ -25,12 +51,18 @@ class API {
                 'Content-Type': 'application/json'
             }
         };
-        return fetch(API_URL + url, requestOptions)
+        return this.timeoutPromise(CONFIG.REQUEST_TIME_OUT, fetch(CONFIG.API_BASE_URL + url, requestOptions)
             .then(this.handleResponse)
             .catch((error) => {
-                this.statusCode(error);
-            });
+                statusCode(error);
+                stopLoad();
+            })
+        ).catch((error) => {
+            this.timeout();
+        });
     }
+
+
 
     /**
      * make a post request
@@ -38,19 +70,23 @@ class API {
      * @param  {body} body in json format
      * @return {promise}
      */
-    postRequest(url, body) {
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        };
-        return fetch(url, requestOptions)
+    static postRequest(url, body) {
+        return this.timeoutPromise(CONFIG.REQUEST_TIME_OUT, fetch(CONFIG.API_BASE_URL + url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
             .then(this.handleResponse)
             .catch((error) => {
-                this.statusCode(error);
-            });
+                statusCode(error);
+                stopLoad();
+            })
+        ).catch((error) => {
+            this.timeout();
+        });
+
     }
 
     // helper functions
@@ -60,9 +96,7 @@ class API {
             if (!response.ok) {
                 return Promise.reject(response);
             }
-
             return data;
         });
     }
 }
-module.exports.API = API

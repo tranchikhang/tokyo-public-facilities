@@ -62,14 +62,18 @@
                 </div>
             </div>
         </div>
+        <result-list ref="resultList" :searchText="searchText"/>
     </div>
 </template>
 
 <script>
-    import {API} from './api/Common.js';
-    import { customAlert } from '../lib/custom-alert.js'
+    import ResultList from './ResultList.vue'
+
     export default {
         name: 'main-page',
+        components: {
+            ResultList
+        },
         data: function() {
             return {
                 isActive: false,
@@ -81,13 +85,8 @@
                 this.isActive = !this.isActive;
             },
             search: function() {
-                API.getRequest('PublicFacility?名称.表記=' + this.searchText)
-                    .then(data => {
-                        console.log(data)
-                });
+                this.$refs.resultList.search();
             }
         }
     }
 </script>
-
-<style src="../lib/custom-alert.css"></style>

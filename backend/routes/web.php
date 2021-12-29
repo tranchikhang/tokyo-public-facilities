@@ -20,5 +20,6 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'PublicFacility', 'middleware' => ['jsonResponse']], function () use ($router) {
     $router->get('/', 'PublicFacilityController@findAll');
+    $router->get('/search', 'PublicFacilityController@search');
     $router->get('/{id}', 'PublicFacilityController@findOneById');
 });

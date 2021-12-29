@@ -20,17 +20,20 @@ class JsonResponseMiddleware
         // Get the response
         $response = $next($request);
 
-        return response()->json(
-            [
-                'status' => $response->status(),
-                'data' => $response->original
-            ],
-            200,
-            [
-                'Content-Type' => 'application/json;charset=UTF-8',
-                'Charset' => 'utf-8',
-            ],
-            JSON_UNESCAPED_UNICODE
-        );
+        if ($response->status()==200) {
+            return response()->json(
+                [
+                    'status' => $response->status(),
+                    'data' => $response->original
+                ],
+                200,
+                [
+                    'Content-Type' => 'application/json;charset=UTF-8',
+                    'Charset' => 'utf-8',
+                ],
+                JSON_UNESCAPED_UNICODE
+            );
+        }
+        return $response;
     }
 }
