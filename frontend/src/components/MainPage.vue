@@ -4,10 +4,9 @@
             <div class="container">
                 <div class="navbar-brand">
                     <a class="navbar-item" href="../">
-                        <!-- <img src="../images/bulma.png" alt="Logo"> -->
                     </a>
                     <span class="navbar-burger burger" data-target="navbarMenu" v-on:click="toggleNav">
-                            <span></span>
+                    <span></span>
                     <span></span>
                     <span></span>
                     </span>
