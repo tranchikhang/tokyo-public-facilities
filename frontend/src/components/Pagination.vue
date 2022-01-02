@@ -1,8 +1,8 @@
 <template>
     <div id="pagination">
         <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-            <a class="pagination-previous" v-on:click="onChange(current - 1)">Previous</a>
-            <a class="pagination-next" v-on:click="onChange(current + 1)">Next page</a>
+            <a class="pagination-previous" v-if="current > 1" @click="onChange(current - 1)">Previous</a>
+            <a class="pagination-next" v-if="size > 1 && current < size" @click="onChange(current + 1)">Next</a>
             <ul class="pagination-list">
 
                 <li v-for="element in elements" :key="element.page" :current="current">
@@ -51,27 +51,29 @@
         },
         methods: {
             add(s, f) {
-                for (var i = s; i < f; i++) {
+                for (var i = s; i <= f; i++) {
                     this.elements.push({
                         type: 'page',
                         page: i
                     })
                 }
             },
+            addBreak() {
+                //
+                this.elements.push({
+                    type: 'ellipse-break'
+                });
+            },
             first() {
-                // Add first page with separator
+                // Add first page
                 this.elements.push({
                     type: 'page',
                     page: 1
-                }, {
-                    type: 'ellipse-break'
-                })
+                });
             },
             last() {
-                // Add last page with separator
+                // Add last page
                 this.elements.push({
-                    type: 'ellipse-break'
-                }, {
                     type: 'page',
                     page: this.size
                 }, )
@@ -79,21 +81,25 @@
             paginate() {
                 this.elements = [];
                 this.size = Math.ceil(this.total / this.itemsPerPage)
-                if (this.size < this.step * 2 + 6) {
-                    // Case without any ellipse breaks
-                    this.add(1, this.size + 1);
-                } else if (this.current < this.step * 2 + 1) {
-                    // Case with ellipse breaks at end
-                    this.add(1, this.step * 2 + 4);
+                if (this.size < this.step) {
+                    // Case without any breaks
+                    this.add(1, this.size);
+                } else if (this.current >= this.size - this.step) {
+                    // Case with breaks at beginning
+                    this.first();
+                    this.addBreak();
+                    this.add(this.current - this.step, this.size);
+                } else if (this.current <= this.step + 1) {
+                    // Case with breaks at end
+                    this.add(1, this.current + this.step);
+                    this.addBreak();
                     this.last();
-                } else if (this.current > this.size - this.step * 2) {
-                    // Case with ellipse breaks at beginning
-                    this.first();
-                    this.add(this.size - this.step * 2 - 2, this.size + 1);
                 } else {
-                    // Case with ellipse breaks at beginning and end
+                    // Case with breaks at beginning and end
                     this.first();
-                    this.add(this.current - this.step, this.current + this.step + 1);
+                    this.addBreak();
+                    this.add(this.current - this.step, this.current + this.step);
+                    this.addBreak();
                     this.last();
                 }
             },
