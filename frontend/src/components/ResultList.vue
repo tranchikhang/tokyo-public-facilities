@@ -31,37 +31,24 @@
 
 
 <script>
-    import API from './api/Common.js';
     import Pagination from './Pagination.vue'
 
     export default{
         components: {
             Pagination
         },
-        props: ['searchText'],
-        data: {
-            facilityList: [],
-            pagingData: [],
-            isDisplayed: false,
-        },
+        props: ['searchText', 'facilityList', 'isDisplayed'],
         created() {
 
         },
         data() {
             return {
-                facilityList: [],
                 pagingData: [],
-                isDisplayed: false,
             }
         },
         methods: {
             search: function() {
-                API.getRequest('PublicFacility/search?q=' + this.searchText)
-                    .then(data => {
-                        this.facilityList = data.data;
-                        // this.$refs.pagination.total = this.facilityList.length;
-                        this.isDisplayed = true;
-                    });
+
             },
             showPagingData: function(val) {
                 this.pagingData = this.facilityList.slice(val.from, val.to);

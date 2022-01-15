@@ -1,5 +1,6 @@
 <template>
     <div id="main-page">
+        <loader ref="loader"></loader>
         <nav class="navbar">
             <div class="container">
                 <div class="navbar-brand">
@@ -61,12 +62,13 @@
                 </div>
             </div>
         </div>
-        <result-list ref="resultList" :searchText="searchText"/>
+        <result-list :facilityList="facilityList" :searchText="searchText" :isDisplayed="isDisplayed"/>
     </div>
 </template>
 
 <script>
     import ResultList from './ResultList.vue'
+    import API from './api/Common.js';
 
     export default {
         name: 'main-page',
@@ -75,8 +77,10 @@
         },
         data: function() {
             return {
+                facilityList: [],
                 isActive: false,
-                searchText: ''
+                searchText: '',
+                isDisplayed: false,
             }
         },
         methods: {
@@ -84,7 +88,13 @@
                 this.isActive = !this.isActive;
             },
             search: function() {
-                this.$refs.resultList.search();
+                this.$refs.loader.startLoad();
+                API.getRequest('PublicFacility/search?q=' + this.searchText)
+                    .then(data => {
+                        this.facilityList = data.data;
+                        this.isDisplayed = true;
+                        this.$refs.loader.stopLoad();
+                    });
             }
         }
     }

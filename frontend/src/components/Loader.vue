@@ -1,24 +1,25 @@
 <template>
-    <div id="loader"></div>
+    <div id="loader" v-if="isDisplayed"></div>
 </template>
 
 <script>
-	import './assets/loader.css'
     export default {
         name: 'loader',
         data() {
             return {
-                isActive: false
+                isDisplayed: false
             }
         },
         methods: {
             // loading animation helper
 			startLoad: function() {
-			    document.getElementById('loader').style.display = null;
+			    this.isDisplayed = true;
 			},
 			stopLoad: function() {
-			    document.getElementById('loader').style.display = 'none';
+                this.isDisplayed = false;
 			}
         }
     }
 </script>
+
+<style src="../assets/loader.css"></style>
