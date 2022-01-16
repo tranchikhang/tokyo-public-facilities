@@ -9,7 +9,7 @@
                         </p>
                     </button>
                 </header>
-                <div class="card-content">
+                <div class="pt-2 pb-2 card-content">
                     <div class="content">
                       {{f.address}}
                       <br>
