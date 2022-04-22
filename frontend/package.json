@@ -1,36 +1,18 @@
 {
   "name": "tokyo-public-facilities",
-  "description": "tokyo public facilities",
-  "version": "1.0.0",
-  "author": "Khang Tran",
-  "license": "MIT",
-  "private": true,
+  "version": "0.0.0",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --history-api-fallback",
-    "build": "cross-env NODE_ENV=production webpack --progress"
+    "dev": "vite --clearScreen false",
+    "build": "vite build",
+    "preview": "vite preview --port 5050"
   },
   "dependencies": {
     "bulma": "^0.9.3",
-    "vue": "^2.5.11",
-    "vue-router": "^3.5.3"
+    "vue": "^3.2.33",
+    "vue-router": "^4.0.14"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-3": "^6.24.1",
-    "cross-env": "^5.0.5",
-    "css-loader": "^6.5.1",
-    "file-loader": "^1.1.4",
-    "vue-loader": "^15.9.8",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^5.66.0",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.7.3"
+    "@vitejs/plugin-vue": "^2.3.1",
+    "vite": "^2.9.5"
   }
 }

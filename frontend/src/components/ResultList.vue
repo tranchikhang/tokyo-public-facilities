@@ -7,24 +7,23 @@
                         <p class="card-header-title">
                             {{f.nameKanji}}
                         </p>
-                    </button>
-                </header>
-                <div class="pt-2 pb-2 card-content">
-                    <div class="content">
-                      {{f.address}}
-                      <br>
-                      {{f.tel}}
+                    </header>
+                    <div class="pt-2 pb-2 card-content">
+                        <div class="content">
+                          {{f.address}}
+                          <br>
+                          {{f.tel}}
+                        </div>
                     </div>
+                    <footer class="card-footer">
+                        <a class="card-footer-item">Map</a>
+                        <a class="card-footer-item">Guide</a>
+                        <a class="card-footer-item">Save</a>
+                    </footer>
                 </div>
-                <footer class="card-footer">
-                    <a class="card-footer-item">Map</a>
-                    <a class="card-footer-item">Guide</a>
-                    <a class="card-footer-item">Save</a>
-                </footer>
+                <pagination :total="facilityList.length" @showPagingData="showPagingData">
+                </pagination>
             </div>
-            <pagination :total="facilityList.length" @showPagingData="showPagingData">
-            </pagination>
-        </div>
         </transition>
     </div>
 </template>
